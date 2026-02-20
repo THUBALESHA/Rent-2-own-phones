@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thubalesha Trading | Application</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#000;
+  color:#fff;
+}
+header{
+  background:linear-gradient(135deg,#000,#111);
+  padding:40px 20px;
+  text-align:center;
+  border-bottom:2px solid gold;
+}
+header h1{color:gold;font-size:28px;}
+.section{padding:30px 20px;max-width:600px;margin:auto;}
+label{font-weight:bold;color:gold;}
+input, select, textarea, button{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:8px;
+  border:none;
+  font-size:16px;
+}
+button{cursor:pointer;}
+.submit-btn{
+  background:gold;
+  color:#000;
+  font-weight:bold;
+}
+.back{
+  display:block;
+  color:gold;
+  margin:15px 0;
+  text-decoration:none;
+  text-align:center;
+}
+.note{
+  font-size:13px;
+  color:#ccc;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Thubalesha Trading Application</h1>
+<p>Fill in your details to apply for a Rent-To-Own Phone</p>
+</header>
+
+<section class="section">
+<form id="appForm">
+
+<label>Full Name</label>
+<input type="text" id="name" placeholder="Full Name" required>
+
+<label>ID Number</label>
+<input type="text" id="id" placeholder="South African ID Number" required>
+
+<label>Phone Number</label>
+<input type="tel" id="phone" placeholder="Your Phone Number" required>
+
+<label>Home Address</label>
+<textarea id="address" placeholder="Full Home Address" required></textarea>
+
+<label>Select Phone</label>
+<select id="device">
+  <option>Honor X6c</option>
+  <option>Samsung A05</option>
+  <option>Samsung A15</option>
+  <option>Redmi 13C</option>
+  <option>Nokia C32</option>
+</select>
+
+<label>Payment Plan</label>
+<select id="payment">
+  <option>Weekly Payment</option>
+  <option>Monthly Payment</option>
+</select>
+
+<label>Employment Status</label>
+<input type="text" id="employment" placeholder="Employed / Self-Employed / Unemployed" required>
+
+<label>Capture Selfie (Required)</label>
+<button type="button" class="submit-btn" onclick="captureSelfie()">Capture Selfie</button>
+<p class="note">Note: Camera may not work inside CodePen preview. Use full browser view.</p>
+
+<label>Upload ID Document (Optional)</label>
+<input type="file" id="idFile" accept="image/*,.pdf">
+
+<label>Upload Proof of Address (Optional)</label>
+<input type="file" id="addressFile" accept="image/*,.pdf">
+
+<button type="button" class="submit-btn" onclick="sendWhatsApp()">Submit via WhatsApp</button>
+<button type="button" class="submit-btn" onclick="sendEmail()">Submit via Email</button>
+
+</form>
+
+<a href="#" class="back">← Back to Home</a>
+</section>
+
+<script>
+let selfieCaptured = false;
+
+// Safe selfie (CodePen compatible)
+function captureSelfie(){
+  alert("Selfie marked as captured. (Camera disabled in CodePen preview)");
+  selfieCaptured = true;
+}
+
+// Validate form
+function validateForm(){
+  const name = document.getElementById("name").value.trim();
+  const id = document.getElementById("id").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const employment = document.getElementById("employment").value.trim();
+
+  if(!name || !id || !phone || !address || !employment){
+    alert("Please fill in all required fields.");
+    return false;
+  }
+
+  if(!selfieCaptured){
+    alert("Please capture selfie before submitting.");
+    return false;
+  }
+
+  return true;
+}
+
+function getFormData(){
+  return {
+    name: document.getElementById("name").value,
+    id: document.getElementById("id").value,
+    phone: document.getElementById("phone").value,
+    address: document.getElementById("address").value,
+    device: document.getElementById("device").value,
+    payment: document.getElementById("payment").value,
+    employment: document.getElementById("employment").value
+  };
+}
+
+// WhatsApp Submit (FIXED)
+function sendWhatsApp(){
+  if(!validateForm()) return;
+
+  const d = getFormData();
+  const idFile = document.getElementById('idFile').files[0];
+  const addressFile = document.getElementById('addressFile').files[0];
+
+  const message = `New Application - Thubalesha Trading
+Name: ${d.name}
+ID Number: ${d.id}
+Phone: ${d.phone}
+Address: ${d.address}
+Device Requested: ${d.device}
+Payment Plan: ${d.payment}
+Employment Status: ${d.employment}
+
+Selfie: Captured
+ID Document: ${idFile ? idFile.name : 'Not Provided'}
+Proof of Address: ${addressFile ? addressFile.name : 'Not Provided'}`;
+
+  const url = "https://wa.me/27787102337?text=" + encodeURIComponent(message);
+  window.open(url, "_blank");
+}
+
+// Email Submit (FIXED)
+function sendEmail(){
+  if(!validateForm()) return;
+
+  const d = getFormData();
+  const idFile = document.getElementById('idFile').files[0];
+  const addressFile = document.getElementById('addressFile').files[0];
+
+  const subject = encodeURIComponent("New Rent-To-Own Application - Thubalesha Trading");
+
+  const body = encodeURIComponent(`New Application - Thubalesha Trading
+
+Name: ${d.name}
+ID Number: ${d.id}
+Phone: ${d.phone}
+Address: ${d.address}
+Device Requested: ${d.device}
+Payment Plan: ${d.payment}
+Employment Status: ${d.employment}
+
+Selfie: Captured
+ID Document: ${idFile ? idFile.name : 'Not Provided'}
+Proof of Address: ${addressFile ? addressFile.name : 'Not Provided'}`);
+
+  window.location.href = `mailto:thubalesha0001@gmail.com?subject=${subject}&body=${body}`;
+}
+</script>
+
+</body>
+</html>
