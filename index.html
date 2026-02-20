@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thubalesha Trading | Home</title>
+<style>
+body{margin:0;font-family:'Segoe UI',sans-serif;background:#000;color:#fff;}
+header{background:linear-gradient(135deg,#000,#111);padding:40px 20px;text-align:center;border-bottom:2px solid gold;}
+header h1{color:gold;font-size:32px;}
+.section{padding:40px 20px;max-width:1100px;margin:auto;}
+h2{color:gold;margin-bottom:15px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.card{background:#111;padding:20px;border-radius:12px;border:1px solid #222;text-align:center;}
+.card img{width:120px;height:auto;margin-bottom:10px;}
+.price{color:#00ffcc;font-size:18px;margin:10px 0;}
+a.button{display:inline-block;margin-top:20px;padding:12px 25px;background:gold;color:#000;border-radius:8px;text-decoration:none;font-weight:bold;}
+.footer{background:#111;padding:30px;text-align:center;border-top:2px solid gold;margin-top:40px;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Thubalesha Trading</h1>
+<p>Rent-To-Own Smartphones | Sebokeng & Emfuleni</p>
+<p>Pay Weekly or Monthly. Own Your Phone.</p>
+</header>
+
+<section class="section">
+<h2>📱 Available Smartphones</h2>
+<div class="cards">
+  <div class="card"><img src="https://fdn2.gsmarena.com/vv/pics/honor/honor-x6.jpg" alt="Honor X6c"><h3>Honor X6c</h3><p class="price">From R450/month or R130/week</p></div>
+  <div class="card"><img src="https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-a05.jpg" alt="Samsung A05"><h3>Samsung Galaxy A05</h3><p class="price">From R500/month or R150/week</p></div>
+  <div class="card"><img src="https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-a15-4g.jpg" alt="Samsung A15"><h3>Samsung Galaxy A15</h3><p class="price">From R550/month or R170/week</p></div>
+  <div class="card"><img src="https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-redmi-13c.jpg" alt="Redmi 13C"><h3>Redmi 13C</h3><p class="price">From R420/month or R120/week</p></div>
+  <div class="card"><img src="https://fdn2.gsmarena.com/vv/pics/nokia/nokia-c32.jpg" alt="Nokia C32"><h3>Nokia C32</h3><p class="price">From R480/month or R140/week</p></div>
+</div>
+<a href="application.html" class="button">Apply Now</a>
+</section>
+
+<section class="section" style="background:#111;">
+<h2>💳 Pay with Yoco</h2>
+<p>Securely pay your deposit or installment online.</p>
+<div id="yoco-button"></div>
+</section>
+
+<div class="footer">
+<h3>Thubalesha Trading</h3>
+<p>📍 Sebokeng & Emfuleni Area</p>
+<p>📞 078 710 2337</p>
+<p>📧 thubalesha0001@gmail.com</p>
+</div>
+
+<script>
+var script = document.createElement('script');
+script.src = "https://js.yoco.com/sdk/v1/yoco-sdk-web.js";
+script.onload = function(){
+  const yoco = new window.YocoSDK({publicKey:'pk_test_YOUR_PUBLIC_KEY'});
+  const button = document.getElementById('yoco-button');
+  const payButton = document.createElement('button');
+  payButton.textContent = "Pay Deposit / Installment via Yoco";
+  payButton.style.padding='12px 25px';
+  payButton.style.fontSize='16px';
+  payButton.style.border='none';
+  payButton.style.borderRadius='8px';
+  payButton.style.background='gold';
+  payButton.style.color='#000';
+  payButton.onclick = function(){
+    yoco.showPopup({amountInCents:5000,currency:'ZAR'})
+    .then(res=>alert("Payment successful!")).catch(err=>alert("Payment failed!"));
+  };
+  button.appendChild(payButton);
+};
+document.head.appendChild(script);
+</script>
+
+</body>
+</html>
